@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Video Downloader</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Youtube Transcript Downloader</h1>
+        <form method="POST" action="/download">
+            <input type="text" name="youtube_url" placeholder="Enter YouTube URL" required>
+            <button type="submit">Download</button>
+        </form>
+    </div>
+</body>
+</html>
