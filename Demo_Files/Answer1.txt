@@ -1,0 +1,37 @@
+## Bing
+You are correct. The SRT format also includes a subtitle heading. The heading is optional and is used to provide additional context for the subtitle text. The heading is separated from the timestamp and subtitle text by a blank line. Here is an example of an SRT file with a subtitle heading:
+
+1
+00:00:10,500 --> 00:00:13,000
+**[Music]** Hello, world!
+
+2
+00:00:15,000 --> 00:00:18,000
+**[Narrator]** This is an example of an SRT file.
+
+In this example, the first subtitle has a heading of [Music] and the second subtitle has a heading of [Narrator].
+To include the subtitle heading in the downloaded transcript along with timestamps, you can modify the code snippet I provided earlier as follows:
+
+from youtube_transcript_api import YouTubeTranscriptApi
+
+# Replace the video_id with the id of your desired YouTube video
+video_id = "your_video_id"
+
+# Get the transcript for the given video_id
+transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+
+# Select the transcript that you want to download
+transcript = transcript_list.find_transcript(['en'])
+
+# Download the transcript along with timestamps and headings
+with open('transcript.txt', 'w') as file:
+    for caption in transcript:
+        file.write(f"{caption['start']} --> {caption['start'] + caption['duration']}\n")
+        if caption['text']:
+            file.write(f"{caption['text']}\n")
+        if caption['title']:
+            file.write(f"**[{caption['title']}]**\n")
+        file.write("\n")
+
+In this modified code snippet, we use for loop to iterate over each caption in the transcript. We then write the start and end timestamps to the file followed by a newline character. Next, we check if there is any subtitle text available and write it to the file followed by another newline character. We then check if there is any subtitle heading available and write it to the file enclosed in double asterisks (**) followed by another newline character. Finally, we write another newline character to indicate the end of the subtitle.
+I hope this helps!

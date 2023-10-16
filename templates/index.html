@@ -1,17 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>YouTube Video Downloader</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YouTube Transcript Downloader</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+  
 </head>
 <body>
-    <div class="container">
-        <h1>Youtube Transcript Downloader</h1>
-        <form method="POST" action="/download">
-            <input type="text" name="youtube_url" placeholder="Enter YouTube URL" required>
-            <button type="submit">Download</button>
-        </form>
-    </div>
+<h1>YouTube Transcript Downloader</h1>
+<div class="container">
+	<span class="toggle-button" id="toggleButton" onclick="toggleSidebar()">☰</span>
+	<div class="left-bar" id="leftSidebar">
+		<!-- Add content for the left bar here -->
+		<button class="translate-button" onclick="window.location.href='{{ url_for('translate_chat') }}'">Chat</button>
+		<button class="hindi-button" style="display: none;" onclick="window.location.href='{{ url_for('hindi_download') }}'">Hindi</button>
+		<button class="english-button" style="display: none;" onclick="window.location.href='{{ url_for('english_download') }}'">English</button>
+	</div>
+	<form method="POST" action="{{ url_for('download') }}" onsubmit="return showButtons(event)">
+		<input type="text" name="url" placeholder="Enter YouTube URL">
+		<input type="submit" class="custom-submit" value="Generate">
+		<p id="error-message" class="error-message"></p>
+	</form>
+</div>
+
+<script>
+function showButtons(event) {
+	event.preventDefault(); // Prevent the form from submitting
+	var urlInput = document.getElementsByName("url")[0];
+	var errorMessage = document.getElementById("error-message");
+	var hindiButton = document.querySelector(".hindi-button");
+	var englishButton = document.querySelector(".english-button");
+
+	if (urlInput.value.trim() === "") {
+		errorMessage.innerHTML = "Please enter a valid YouTube URL.";
+	} else {
+		errorMessage.innerHTML = "";
+		hindiButton.style.display = "block";
+		englishButton.style.display = "block";
+
+		// Make an AJAX request to the server to check if the generation is successful
+		fetch("/download", {
+			method: "POST",
+			body: new URLSearchParams({ url: urlInput.value }),
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (!data.success) {
+				errorMessage.innerHTML = "Generation failed. Please check the URL.";
+				hindiButton.style.display = "none";
+				englishButton.style.display = "none";
+			}
+		})
+		.catch(error => {
+			console.error("Error:", error);
+			errorMessage.innerHTML = "An error occurred while processing the request.";
+			hindiButton.style.display = "none";
+			englishButton.style.display = "none";
+		});
+	}
+}
+
+function toggleSidebar() {
+	var leftSidebar = document.getElementById("leftSidebar");
+	var toggleButton = document.getElementById("toggleButton");
+	if (leftSidebar.style.width === "180px") {
+		leftSidebar.style.width = "0";
+		toggleButton.innerHTML = "☰";
+	} else {
+		leftSidebar.style.width = "180px";
+		toggleButton.innerHTML = "×";
+	}
+}
+</script>
 </body>
 </html>

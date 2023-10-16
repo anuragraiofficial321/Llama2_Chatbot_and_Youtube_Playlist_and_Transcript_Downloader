@@ -1,39 +1,126 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #16aa98;
+    font-family: Roboto, sans-serif;
+    background-color: #ffffff;
+  }
+
+h1 {
+text-align: center;
+color: #333333;
+}
+
+form {
+margin: 0;
+padding: 20px;
+width: 100%;
+background-color: #f2f2f2;
+border-radius: 5px;
+margin-left: auto;
+margin-right: auto;
+box-shadow: 0px 0px 30px #ccc;
+}
+
+input[type="text"] {
+width: 86%;
+padding: 10px;
+margin-bottom: 20px;
+border-radius: 5px;
+margin-left: 61px;
+border: none;
+box-shadow: 0px 0px 5px #ccc;
+}
+
+.custom-submit {
+background-color: #0000ff;
+color: white;
+padding: 10px 20px;
+border-radius: 5px;
+border: none;
+cursor: pointer;
+margin-left: 180px;
+margin-bottom: 10px;
+display: block;
+width: 15%;
+text-align: center;
+margin: 0 auto;
+}
+
+.custom-submit:hover {
+background-color: #3e8e41;
+}
+
+.hindi-button,
+.english-button,
+.translate-button {
+    background-color: #a32cc4;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+.error-message {
+color: red;
+}
+
+.left-bar button {
+    background-color: #a32cc4;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px; /* Adjust this value for the desired vertical spacing */
+    display: block;
+    width: 50%;
     text-align: center;
 }
 
+.left-bar button:not(:last-child) {
+    margin-bottom: 20px;
+    margin-top: 20px; /* Adjust this value for the desired vertical spacing */
+}
+.toggle-button {
+position: absolute;
+top: 10px;
+left: 10px;
+background-color: #0000ff;
+color: white;
+padding: 10px 20px;
+border-radius: 5px;
+border: none;
+cursor: pointer;
+}
+
+.toggle-button:hover {
+background-color: #3e8e41;
+}
+
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: #c8c8c8;
-    border-radius: 20px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+display: flex;
+
 }
 
-h1 {
-    color: #333;
+.left-bar {
+background-color: #7fbd7d;
+color: white;
+box-shadow: 0px 0px 10px #ccc;
+overflow: auto;
+height: 100%;
+position: fixed;
+transition: 0.5s;
+width: 0;
 }
 
-form input {
-    width: 90%;
-    padding: 10px;
-    margin: 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.left-bar.visible {
+width: 180px;
 }
 
-button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-}
 
-button:hover {
-    background-color: #1f6fb2;
-}
+
