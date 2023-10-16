@@ -8,7 +8,13 @@ from flask import (
     abort,
     jsonify,
 )
+from googletrans import Translator
+import chardet
 
+# Create an instance of the Translator class
+translator = Translator()
+
+import time
 from Video_Transcript import transcript
 import os, sys
 from os.path import dirname, join, abspath
@@ -78,10 +84,20 @@ def english_download():
     return serve_file(path_file, f"{title}.txt")
 
 
-@app.route("/translate_chat")
+@app.route("/translate_chat", methods=["GET"])
 def translate_chat():
     # Handle English download logic here
-    pass
+    return render_template("chatbot.html")
+
+
+@app.route("/get_response", methods=["POST"])
+def get_response():
+    user_message = request.form["user_message"]
+    result = translator.translate(user_message, src="en", dest="hi")
+
+    # Here you can add your chatbot logic to generate a response.
+    bot_response = result.text
+    return jsonify({"bot_response": bot_response})
 
 
 if __name__ == "__main__":
